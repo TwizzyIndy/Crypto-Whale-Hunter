@@ -40,6 +40,7 @@ def main():
         for key in holder:
             try:
                 holder[key].refresh()
+                print('\033c', end='')  # Clear the screen
             except Exception as e:
                 print(f"Error refreshing market {key}: {e}")
 
