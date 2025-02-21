@@ -26,4 +26,4 @@ def satirYaz(market):
     print ( market.df24['symbol'][0:6], end='\t\t' )
     print ( color + str(  "{:.4f}".format(market.hacim_degisim())  ) + '\x1b[0m', end='\t' )
     print ( color_artis + icerik + '\x1b[0m' , end='\t'  )
-    print ( str(int(market.recent_trades_time_interval())) + 'sn')
+    print ( str(int(market.recent_trades_time_interval())) + 'sec')
