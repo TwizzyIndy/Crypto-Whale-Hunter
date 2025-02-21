@@ -19,7 +19,7 @@ holder = {market: BiAn(market) for market in markets}  # Create objects in the d
 
 def sonuclariYaz():
     print("#############################################")
-    print("MARKET\t\tVOLUME\t↓↑\tLAST500")
+    print(f"{'MARKET':<12}{'VOLUME':<12}{'↓↑':<2}{'LAST500':<10}")
     for key in holder:
         try:
             satirYaz(holder[key])
