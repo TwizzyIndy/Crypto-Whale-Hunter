@@ -8,9 +8,9 @@ np.seterr(divide='ignore', invalid='ignore')
 print("The app is working. Please wait a moment for the initial data to be received. Please ignore any error messages for the initial few data points.")
 
 markets = [
-    'BTCUSDT', 'ETHUSDT', 'BCHUSDT', 'XRPUSDT',
-    'LTCUSDT', 'EOSUSDT', 'ADAUSDT', 'NEOUSDT',
-    'BNBUSDT', 'XLMUSDT', 'TRXUSDT', 'XEMUSDT',
+    'XRPUSDT', 'ADAUSDT', 'BTCUSDT', 'ETHUSDT',
+    'LTCUSDT', 'EOSUSDT', 'NEOUSDT', 'BCHUSDT',
+    'BNBUSDT', 'XLMUSDT', 'TRXUSDT',
     'XTZUSDT', 'VETUSDT', 'MKRUSDT', 'FTTUSDT',
     'ETCUSDT', 'ZILUSDT', 'ZECUSDT', 'DOGEUSDT'
 ]
