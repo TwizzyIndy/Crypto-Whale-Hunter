@@ -1,6 +1,9 @@
 import time
 from binanceClass import BinanceAnaliz as BiAn
 from style import satirYaz
+import numpy as np
+
+np.seterr(divide='ignore', invalid='ignore')
 
 print("The app is working. Please wait a moment for the initial data to be received. Please ignore any error messages for the initial few data points.")
 
