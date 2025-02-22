@@ -114,3 +114,39 @@ class BinanceAnaliz:
         except Exception as e:
             print(f"Error determining price movement for {self.market}: {e}")
             return 0
+
+    def detect_trend(self, interval="5m", limit=5):
+        """
+        Fetch the latest candlesticks for the given interval and return a basic trend string.
+        Example logic: if most of the last candles closed above their open => "UP", else "DOWN".
+        """
+        try:
+            klines = client.get_klines(symbol=self.market, interval=interval, limit=limit)
+            ups = 0
+            for k in klines:
+                open_price = float(k[1])
+                close_price = float(k[4])
+                if close_price > open_price:
+                    ups += 1
+            # more than half are up
+            if ups > (limit // 2):
+                return "UP"
+            else:
+                return "DOWN"
+        except Exception as e:
+            print(f"Error detecting trend for {self.market}: {e}")
+            return "?"
+
+    def detect_trend_sma(self, interval="5m", limit=5):
+        """
+        A simple SMA-based trend detection: if the last close is above SMA => UP, else DOWN.
+        """
+        try:
+            klines = client.get_klines(symbol=self.market, interval=interval, limit=limit)
+            closes = [float(k[4]) for k in klines]
+            sma = sum(closes) / len(closes)
+            last_close = closes[-1]
+            return "UP" if last_close > sma else "DOWN"
+        except Exception as e:
+            print(f"Error in detect_trend_sma for {self.market}: {e}")
+            return "?"
