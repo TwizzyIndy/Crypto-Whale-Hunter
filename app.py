@@ -29,24 +29,26 @@ def sonuclariYaz():
     new_holder = {symbol: BiAn(symbol) for symbol in unique_symbols}
     holder.update(new_holder)
 
-    half_size = len(holder) // 2
-    left_symbols = list(holder.keys())[:half_size]
-    right_symbols = list(holder.keys())[half_size:]
-    
-    left_data = []
-    for k in left_symbols:
+    # collect (ratio, row) tuples
+    data_list = []
+    for sym in holder:
         try:
-            left_data.append(satirYaz(holder[k]))
+            ratio = holder[sym].hacim_degisim()
+            row = satirYaz(holder[sym])  # returns four-column list
+            data_list.append((ratio, row))
         except:
-            left_data.append("Error")
+            # Create a dummy row for errors
+            data_list.append((0, [sym, "-", "-", "-"]))
 
-    right_data = []
-    for k in right_symbols:
-        try:
-            right_data.append(satirYaz(holder[k]))
-        except:
-            right_data.append("Error")
+    # sort by ratio decending
+    data_list.sort(key=lambda x: x[0], reverse=True)
 
+    # split into left and right columns
+    half_size = len(data_list) // 2
+    left_data = [item[1] for item in data_list[:half_size]]
+    right_data = [item[1] for item in data_list[half_size:]]
+
+    # build final rows for tabulate
     rows = []
     max_len = max(len(left_data), len(right_data))
     for i in range(max_len):
