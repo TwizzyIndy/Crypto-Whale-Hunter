@@ -13,19 +13,22 @@ favourite_pairs = [
     'XRPUSDT', 'ADAUSDT',
 ]
 
-# get top pairs
-top_pairs = BinanceInfo().get_top_pairs(n=20)
-top_symbols = [pair['symbol'] for pair in top_pairs]
-
-# extends the list of favourite pairs with the top pairs
-# it can be duplicated, so we need to remove duplicates
-favourite_pairs.extend(top_symbols)
-favourite_pairs = list(set(favourite_pairs))
-
 holder = {symbol: BiAn(symbol) for symbol in favourite_pairs}  # Create objects in the dictionary
 
 
 def sonuclariYaz():
+    # get top pairs
+    top_pairs = BinanceInfo().get_top_pairs(n=20)
+    top_symbols = [pair['symbol'] for pair in top_pairs]
+    favourite_pairs.extend(top_symbols)
+
+    # remove duplicates
+    unique_symbols = list(set(favourite_pairs))
+
+    # update holder
+    new_holder = {symbol: BiAn(symbol) for symbol in unique_symbols}
+    holder.update(new_holder)
+
     half_size = len(holder) // 2
     left_symbols = list(holder.keys())[:half_size]
     right_symbols = list(holder.keys())[half_size:]
