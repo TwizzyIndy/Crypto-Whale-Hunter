@@ -25,9 +25,9 @@ def satirYaz(market):
         else:
             icerik = '  '
     
-    print(
-        f"{market.df24['symbol']:<12}"
-        + color + f"{market.hacim_degisim():<12.4f}" + '\x1b[0m'
-        + color_artis + f"{icerik:<2}" + '\x1b[0m'
-        + f"{int(market.recent_trades_time_interval())}sec"
-    )
+    return [
+        market.df24['symbol'],
+        color + f"{market.hacim_degisim():.4f}" + '\x1b[0m',
+        color_artis + icerik + '\x1b[0m',
+        f"{int(market.recent_trades_time_interval())}sec"
+    ]

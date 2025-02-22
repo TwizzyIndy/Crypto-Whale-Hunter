@@ -3,6 +3,7 @@ from binanceClass import BinanceAnaliz as BiAn
 from binanceClass import BinanceInfo
 from style import satirYaz
 import numpy as np
+from tabulate import tabulate
 
 np.seterr(divide='ignore', invalid='ignore')
 
@@ -25,13 +26,41 @@ holder = {symbol: BiAn(symbol) for symbol in favourite_pairs}  # Create objects 
 
 
 def sonuclariYaz():
-    print("#############################################")
-    print(f"{'MARKET':<12}{'VOLUME':<12}{'↓↑':<2}{'LAST500':<10}")
-    for key in holder:
+    half_size = len(holder) // 2
+    left_symbols = list(holder.keys())[:half_size]
+    right_symbols = list(holder.keys())[half_size:]
+    
+    left_data = []
+    for k in left_symbols:
         try:
-            satirYaz(holder[key])
-        except Exception as e:
-            print(f"Error processing market {key}: {e}")
+            left_data.append(satirYaz(holder[k]))
+        except:
+            left_data.append("Error")
+
+    right_data = []
+    for k in right_symbols:
+        try:
+            right_data.append(satirYaz(holder[k]))
+        except:
+            right_data.append("Error")
+
+    rows = []
+    max_len = max(len(left_data), len(right_data))
+    for i in range(max_len):
+        left_cols = left_data[i] if i < len(left_data) else ["", "", "", ""]
+        right_cols = right_data[i] if i < len(right_data) else ["", "", "", ""]
+        rows.append(left_cols + right_cols)
+
+    print(
+        tabulate(
+            rows,
+            headers=[
+                "MARKET", "VOLUME", "↓↑", "LAST500",
+                "MARKET", "VOLUME", "↓↑", "LAST500"
+            ],
+            tablefmt="fancy_grid"
+        )
+    )
 
 def main():
     # Initial data retrieval
