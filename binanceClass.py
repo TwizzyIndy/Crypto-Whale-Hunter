@@ -6,6 +6,29 @@ import keys
 
 client = Client(api_key=keys.ApiKey, api_secret=keys.SecretKey)
 
+
+class BinanceInfo:
+    def __init__(self, quote_asset='USDT'):
+        self.quote_asset = quote_asset
+
+        # Fetch exchange information
+        self.exchange_info = client.get_exchange_info()
+
+        # Create a dictionary of trading symbols
+        self.symbols = {
+            s['symbol']: s for s in self.exchange_info['symbols'] if s['quoteAsset'] == self.quote_asset and s['status'] == 'TRADING' and s['isSpotTradingAllowed']
+        }
+        # Fetch 24-hour ticker statistics
+        self.ticker24hr = client.get_ticker()
+
+        # Filter and sort by quote volume
+        self.active_spot_pairs = [t for t in self.ticker24hr if t['symbol'] in self.symbols]
+        self.sorted_pairs = sorted(self.active_spot_pairs, key=lambda x: float(x['quoteVolume']), reverse=True)
+
+    def get_top_pairs(self, n=10):
+        """Get the top n trading pairs by 24-hour quote volume."""
+        return self.sorted_pairs[:n]
+
 class BinanceAnaliz:
     def __init__(self, market_symbol):
         self.market = market_symbol
