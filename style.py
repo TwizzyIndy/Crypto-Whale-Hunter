@@ -24,10 +24,14 @@ def satirYaz(market):
             icerik = '↓↓'
         else:
             icerik = '  '
+
+    # get 5m trend
+    trend_5m = market.detect_trend_sma(interval="5m", limit=5)
     
     return [
         market.df24['symbol'],
         color + f"{hacim_deg:.4f}" + '\x1b[0m',
         color_artis + icerik + '\x1b[0m',
-        f"{int(market.recent_trades_time_interval())}sec"
+        f"{int(market.recent_trades_time_interval())}sec",
+        trend_5m
     ]
