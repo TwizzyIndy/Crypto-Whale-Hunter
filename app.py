@@ -38,7 +38,7 @@ def sonuclariYaz():
             data_list.append((ratio, row))
         except:
             # Create a dummy row for errors
-            data_list.append((0, [sym, "-", "-", "-", "-"]))
+            data_list.append((0, [sym, "-", "-", "-", "-", "-"]))
 
     # sort by ratio decending
     data_list.sort(key=lambda x: x[0], reverse=True)
@@ -52,16 +52,16 @@ def sonuclariYaz():
     rows = []
     max_len = max(len(left_data), len(right_data))
     for i in range(max_len):
-        left_cols = left_data[i] if i < len(left_data) else ["", "", "", "", ""]
-        right_cols = right_data[i] if i < len(right_data) else ["", "", "", "", ""]
+        left_cols = left_data[i] if i < len(left_data) else ["", "", "", "", "", ""]
+        right_cols = right_data[i] if i < len(right_data) else ["", "", "", "", "", ""]
         rows.append(left_cols + right_cols)
 
     print(
         tabulate(
             rows,
             headers=[
-                "MARKET", "VOLUME", "↓↑", "LAST500", "TREND",
-                "MARKET", "VOLUME", "↓↑", "LAST500", "TREND"
+                "MARKET", "VOLUME", "BVR", "↓↑", "LAST500", "TREND",
+                "MARKET", "VOLUME", "BVR", "↓↑", "LAST500", "TREND", 
             ],
             tablefmt="fancy_grid"
         )

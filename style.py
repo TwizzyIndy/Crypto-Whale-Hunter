@@ -28,9 +28,12 @@ def satirYaz(market):
     # get 5m trend
     trend_5m = market.detect_trend_sma(interval="5m", limit=5)
     
+    buy_ratio = market.buy_volume_ratio()
+    
     return [
         market.df24['symbol'],
         color + f"{hacim_deg:.4f}" + '\x1b[0m',
+        f"{buy_ratio * 100:.2f}%",
         color_artis + icerik + '\x1b[0m',
         f"{int(market.recent_trades_time_interval())}sec",
         trend_5m

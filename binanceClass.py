@@ -150,3 +150,18 @@ class BinanceAnaliz:
         except Exception as e:
             print(f"Error in detect_trend_sma for {self.market}: {e}")
             return "?"
+
+    def buy_volume_ratio(self):
+        try:
+            trades_df = self.df
+
+            buy_trades = trades_df[trades_df['isBuyerMaker'] == False]
+            buy_volume = buy_trades['quoteQty'].astype(float).sum()
+
+            total_volume = trades_df['quoteQty'].astype(float).sum()
+            if total_volume == 0:
+                return 0.0
+            
+            return buy_volume / total_volume
+        except:
+            return 0.0
